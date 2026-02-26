@@ -6,13 +6,28 @@ export const apiResponse: unknown = [
   { name: "Jim", age: 25 },
 ];
 
+
+function isUser(obj: unknown): obj is User {
+  return (
+    typeof obj === "object" &&
+    obj !== null &&
+    "name" in obj &&
+    typeof (obj as any).name === "string" &&
+    "age" in obj &&
+    typeof (obj as any).age === "number"
+  );
+}
+
+
 export function getUsersData(): User[] {
-  return apiResponse as User[]; // intentionally unsafe
+  if (!Array.isArray(apiResponse)) return [];
+  return apiResponse.filter(isUser);
 }
 
 export function formatAges(users: User[]): string[] {
-  return users.map((u) => u.age.toFixed(0));
+  return users.map((u) => {
+    const age = typeof u.age === "number" ? u.age : 0;
+    return age.toFixed(0);
+  });
 }
 
-
-// test push
