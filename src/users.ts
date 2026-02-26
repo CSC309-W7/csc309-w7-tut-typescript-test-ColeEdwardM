@@ -13,3 +13,6 @@ export function getUsersData(): User[] {
 export function formatAges(users: User[]): string[] {
   return users.map((u) => u.age.toFixed(0));
 }
+
+
+// test push
